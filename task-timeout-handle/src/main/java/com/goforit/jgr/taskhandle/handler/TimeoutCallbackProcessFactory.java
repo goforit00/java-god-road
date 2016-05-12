@@ -1,6 +1,6 @@
 package com.goforit.jgr.taskhandle.handler;
 
-import com.goforit.jgr.taskhandle.processor.CallbackProcess;
+import com.goforit.jgr.taskhandle.filter.TaskTimeoutProcessInfo;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,23 +12,21 @@ public enum TimeoutCallbackProcessFactory {
 
     INSTANCE{
 
-        private Map<String,CallbackProcess> callbackMap=new ConcurrentHashMap<String, CallbackProcess>();
+        private Map<String,TaskTimeoutProcessInfo> callbackMap=new ConcurrentHashMap<String, TaskTimeoutProcessInfo>();
 
         @Override
-        void register(String tableName,String taskType,CallbackProcess process) throws Exception{
-            String key=tableName+"+"+taskType;
-            if(null!=callbackMap.get(key)){
-                throw new RuntimeException("");
-            }
+        public void register(String tableName,String taskType,TaskTimeoutProcessInfo taskTimeoutProcessInfo) throws Exception{
+
         }
 
         @Override
-        CallbackProcess getProcessor(String tableName,String taskType) {
+        public TaskTimeoutProcessInfo getProcessor(String tableName,String taskType) {
             return null;
         }
     };
 
-    abstract void register(String tableName,String taskType,CallbackProcess process) throws Exception;
+    abstract public void register(String tableName,String taskType,TaskTimeoutProcessInfo taskTimeoutProcessInfo) throws Exception;
 
-    abstract CallbackProcess getProcessor(String tableName,String taskType);
+    abstract public TaskTimeoutProcessInfo getProcessor(String tableName,String taskType);
+
 }

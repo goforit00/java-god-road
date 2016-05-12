@@ -13,9 +13,20 @@ public @interface TaskMapperAnnotation {
 
     String createMethodName() default "create";
 
-    String taskTypeName() default "";
+    String tableName() default "task";
 
-    String timeoutColumnName() default "";
+    String taskIdColumnName() default "id";
 
-    String gmtCreateColumnName() default "";
+    String taskType() default "";
+
+    String taskCreateTimeColumnName() default "gmtCreated";
+
+    int timeout() default 10;
+
+    String statusColumnName() default "status";
+
+    //多个以逗号分隔
+    String finishStatusList() default "FINISH";
+
+    String timeoutCallbackProcessBeanName() default "";
 }
