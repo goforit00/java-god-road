@@ -36,6 +36,12 @@
                 <version>${spring.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.0</version>
+            </dependency>
+
             <!--quartz-->
             <dependency>
                 <groupId>org.quartz-scheduler</groupId>

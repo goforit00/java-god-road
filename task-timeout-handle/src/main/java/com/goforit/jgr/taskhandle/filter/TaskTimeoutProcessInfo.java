@@ -1,5 +1,7 @@
 package com.goforit.jgr.taskhandle.filter;
 
+import com.goforit.jgr.taskhandle.processor.TaskTimeoutCallbackProcess;
+
 import java.util.List;
 
 /**
@@ -24,7 +26,7 @@ public class TaskTimeoutProcessInfo {
 
     private String taskType;
 
-    private String timeoutCallbackProcessBeanName;
+    private TaskTimeoutCallbackProcess taskTimeoutCallbackProcess;
 
     //TODO constructor
 
@@ -92,11 +94,11 @@ public class TaskTimeoutProcessInfo {
         this.taskType = taskType;
     }
 
-    public String getTimeoutCallbackProcessBeanName() {
-        return timeoutCallbackProcessBeanName;
+    public TaskTimeoutCallbackProcess getTaskTimeoutCallbackProcess() {
+        return taskTimeoutCallbackProcess;
     }
 
-    public void setTimeoutCallbackProcessBeanName(String timeoutCallbackProcessBeanName) {
-        this.timeoutCallbackProcessBeanName = timeoutCallbackProcessBeanName;
+    public void setTaskTimeoutCallbackProcess(TaskTimeoutCallbackProcess taskTimeoutCallbackProcess) {
+        this.taskTimeoutCallbackProcess = taskTimeoutCallbackProcess;
     }
 }

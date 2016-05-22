@@ -19,6 +19,7 @@ public class TaskTimeoutChecker implements InitializingBean {
 
             Scheduler scheduler=schedulerFactory.getScheduler();
 
+            //TODO 这里 TaskTimeoutCheckerJob 怎么实例化的，需要加入参数
             JobDetail jobDetail= JobBuilder.newJob(TaskTimeoutCheckerJob.class).withIdentity("JobName","JobGroupName").build();
 
             Trigger trigger = TriggerBuilder.newTrigger()
