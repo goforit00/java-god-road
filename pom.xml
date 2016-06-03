@@ -10,6 +10,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>task-timeout-handle</module>
+        <module>lock-service-core</module>
+        <module>thread-pool-monitor</module>
     </modules>
 
     <properties>
