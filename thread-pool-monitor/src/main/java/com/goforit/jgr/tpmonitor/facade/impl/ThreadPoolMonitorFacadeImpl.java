@@ -12,7 +12,7 @@ import java.util.List;
  * Created by junqingfjq on 16/6/3.
  */
 
-@Service
+@Service(value = "threadPoolMonitorFacadeImpl")
 public class ThreadPoolMonitorFacadeImpl implements ThreadPoolMonitorFacade {
 
     @Autowired

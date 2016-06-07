@@ -1,5 +1,8 @@
 package com.goforit.jgr.tpmonitor.monitor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,13 +14,18 @@ public enum ThreadPoolMonitorSet {
 
     INSTANCE{
 
+        private final Logger LOGGER= LoggerFactory.getLogger(ThreadPoolMonitorSet.class);
+
         private Map<String,Object> threadPoolMap=new ConcurrentHashMap<String, Object>();
 
         @Override
         public boolean register(String threadPoolName, Object ThreadPoolObject) {
+
+            System.err.println("begin to registe thread pool name="+threadPoolName);
             if(null!=threadPoolMap.get(threadPoolName)){
                 //TODO log
-                throw new RuntimeException("Thread Pool Name has exist. "+threadPoolName);
+                LOGGER.error("Thread Pool Name has exist. threadPoolName="+threadPoolName);
+                throw new RuntimeException("Thread Pool Name has exist. threadPoolName="+threadPoolName);
             }
 
             threadPoolMap.put(threadPoolName,ThreadPoolObject);

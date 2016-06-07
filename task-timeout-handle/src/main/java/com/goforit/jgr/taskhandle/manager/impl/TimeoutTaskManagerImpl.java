@@ -23,6 +23,11 @@ public class TimeoutTaskManagerImpl implements TimeoutTaskManager {
     }
 
     @Override
+    public void updateTimeoutTaskStatus(boolean status, String msg) {
+
+    }
+
+//    @Override
     public void updateTimeoutTaskStatus(boolean status) {
 
     }

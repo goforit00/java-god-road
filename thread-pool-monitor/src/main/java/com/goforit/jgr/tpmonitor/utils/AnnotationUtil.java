@@ -1,5 +1,6 @@
 package com.goforit.jgr.tpmonitor.utils;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -27,8 +28,10 @@ public class AnnotationUtil {
             return null;
         }
 
-        Method method=annotationClass.getDeclaredMethod(annotationField);
-        Object value=method.invoke(annotationClass);
+        Annotation annotation=Class.forName(className).getAnnotation(annotationClass);
+
+        Method method=annotation.getClass().getDeclaredMethod(annotationField, null);
+        Object value=method.invoke(annotation,null);
 
         return value;
 
@@ -53,8 +56,9 @@ public class AnnotationUtil {
         Field [] fields=Class.forName(className).getDeclaredFields();
         for(Field f:fields){
             if(f.isAnnotationPresent(annotationClass)){
-                Method m=annotationClass.getDeclaredMethod(annotationField);
-                Object value=m.invoke(annotationClass);
+                Annotation annotation=f.getAnnotation(annotationClass);
+                Method m=annotation.getClass().getDeclaredMethod(annotationField);
+                Object value=m.invoke(annotation);
                 result.put(f.getName(),value);
             }
         }

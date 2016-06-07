@@ -13,6 +13,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface ThreadPoolMonitorAnnotation {
 
-    String threadPoolName() default "threadPoolName";
+    public String threadPoolName() default "threadPoolName";
 
 }

@@ -54,4 +54,15 @@ public class ThreadPoolInformation {
     public void setQueueLength(int queueLength) {
         this.queueLength = queueLength;
     }
+
+    @Override
+    public String toString() {
+        return "ThreadPoolInformation{" +
+                "name='" + name + '\'' +
+                ", threadNum=" + threadNum +
+                ", coreThreadNum=" + coreThreadNum +
+                ", maxThreadNum=" + maxThreadNum +
+                ", queueLength=" + queueLength +
+                '}';
+    }
 }

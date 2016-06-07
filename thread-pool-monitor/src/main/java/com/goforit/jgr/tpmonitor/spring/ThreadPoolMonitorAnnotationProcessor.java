@@ -3,11 +3,14 @@ package com.goforit.jgr.tpmonitor.spring;
 import com.goforit.jgr.tpmonitor.annotation.ThreadPoolMonitorAnnotation;
 import com.goforit.jgr.tpmonitor.monitor.ThreadPoolMonitorSet;
 import com.goforit.jgr.tpmonitor.utils.AnnotationUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 
 /**
@@ -17,6 +20,9 @@ import java.util.Map;
 //TODO bean写入到配置文件
 @Service
 public class ThreadPoolMonitorAnnotationProcessor implements BeanPostProcessor {
+
+    private static final Logger LOGGER= LoggerFactory.getLogger(ThreadPoolMonitorAnnotationProcessor.class);
+
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName)
                                                                                throws BeansException {
@@ -29,9 +35,13 @@ public class ThreadPoolMonitorAnnotationProcessor implements BeanPostProcessor {
 
         try {
             //类上的注解
-            Object annClassValue = AnnotationUtil.loadClassAnnotationValues(ThreadPoolMonitorAnnotation.class.getClass(),
+            System.err.println("in postProcessAfterInitialization bean name="+beanName);
+
+            Object annClassValue = AnnotationUtil.loadClassAnnotationValues(ThreadPoolMonitorAnnotation.class,
                     "threadPoolName", bean.getClass().getName());
             if (null!=annClassValue) {
+                System.err.println("in postProcessAfterInitialization to register bean ="+beanName);
+
                 ThreadPoolMonitorSet.INSTANCE.register((String) annClassValue, bean);
             }
 
@@ -42,7 +52,10 @@ public class ThreadPoolMonitorAnnotationProcessor implements BeanPostProcessor {
                 for(Map.Entry<String,Object> entry:annFieldMap.entrySet()){
 
                     String fieldName=entry.getKey();
-                    Object objRef=bean.getClass().getField(fieldName).get(bean);
+                    System.err.println("class:"+bean.getClass().getName());
+                    Field field=bean.getClass().getDeclaredField(fieldName);
+                    field.setAccessible(true);
+                    Object objRef=field.get(bean);
                     if(null!=objRef){
                         ThreadPoolMonitorSet.INSTANCE.register((String)entry.getValue(),objRef);
                     }else {
@@ -51,6 +64,9 @@ public class ThreadPoolMonitorAnnotationProcessor implements BeanPostProcessor {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
+
+            LOGGER.error("in postProcessAfterInitialization exception",e);
             //TODO log
 
         }
