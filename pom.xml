@@ -13,6 +13,7 @@
         <module>lock-service-core</module>
         <module>thread-pool-monitor</module>
         <module>thread-pool-mvc</module>
+        <module>thread-pool-monitor-master</module>
     </modules>
 
     <properties>
