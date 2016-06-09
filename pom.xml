@@ -17,10 +17,18 @@
 
     <properties>
         <spring.version>3.0.5.RELEASE</spring.version>
+        <java-god-road.version>1.0-SNAPSHOT</java-god-road.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <!--sub project-->
+            <dependency>
+                <groupId>com.goforit.java-god-road</groupId>
+                <artifactId>thread-pool-monitor</artifactId>
+                <version>${java-god-road.version}</version>
+            </dependency>
 
             <!--spring-->
             <dependency>
@@ -42,6 +50,7 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
@@ -55,12 +64,6 @@
                 <version>${spring.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
-                <scope>test</scope>
-            </dependency>
 
 
             <dependency>
@@ -136,11 +139,31 @@
                 <artifactId>cglib-nodep</artifactId>
                 <version>2.1_3</version>
             </dependency>
+
+            <!--jersey-->
+
+            <dependency>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-server</artifactId>
+                <version>1.19</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.jersey</groupId>
+                <artifactId>jersey-client</artifactId>
+                <version>1.19</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sun.jersey.contribs</groupId>
+                <artifactId>jersey-spring</artifactId>
+                <version>1.19</version>
+            </dependency>
+            <dependency>
+                <groupId>com.owlike</groupId>
+                <artifactId>genson</artifactId>
+                <version>0.99</version>
+            </dependency>
+
         </dependencies>
-
-
-
-
 
     </dependencyManagement>
 
