@@ -21,7 +21,8 @@ import java.util.Map;
 @Service
 public class ThreadPoolMonitorAnnotationProcessor implements BeanPostProcessor {
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(ThreadPoolMonitorAnnotationProcessor.class);
+    private static final Logger LOGGER = LoggerFactory
+                                           .getLogger(ThreadPoolMonitorAnnotationProcessor.class);
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName)
@@ -35,39 +36,42 @@ public class ThreadPoolMonitorAnnotationProcessor implements BeanPostProcessor {
 
         try {
             //类上的注解
-            System.err.println("in postProcessAfterInitialization bean name="+beanName);
-
-            Object annClassValue = AnnotationUtil.loadClassAnnotationValues(ThreadPoolMonitorAnnotation.class,
-                    "threadPoolName", bean.getClass().getName());
-            if (null!=annClassValue) {
-                System.err.println("in postProcessAfterInitialization to register bean ="+beanName);
-
+            Object annClassValue = AnnotationUtil.loadClassAnnotationValues(
+                ThreadPoolMonitorAnnotation.class, "threadPoolName", bean.getClass().getName());
+            if (null != annClassValue) {
+                LOGGER
+                    .info(
+                        "Find ThreadPoolMonitorAnnotation on Class [{}] and bean name [{}]. Begin to register ThreadPool Name [{}].",
+                        bean.getClass().getName(), beanName, annClassValue);
                 ThreadPoolMonitorSet.INSTANCE.register((String) annClassValue, bean);
             }
 
             //属性上的注解
             Map<String, Object> annFieldMap = AnnotationUtil.loadFieldsAnnotationValues(
                 ThreadPoolMonitorAnnotation.class, "threadPoolName", bean.getClass().getName());
-            if(!CollectionUtils.isEmpty(annFieldMap)){
-                for(Map.Entry<String,Object> entry:annFieldMap.entrySet()){
+            if (!CollectionUtils.isEmpty(annFieldMap)) {
 
-                    String fieldName=entry.getKey();
-                    System.err.println("class:"+bean.getClass().getName());
-                    Field field=bean.getClass().getDeclaredField(fieldName);
+                for (Map.Entry<String, Object> entry : annFieldMap.entrySet()) {
+
+                    String fieldName = entry.getKey();
+                    String tpName = (String) entry.getValue();
+                    LOGGER
+                        .info(
+                            "Find ThreadPoolMonitorAnnotation on property [{}] in bean [{}]. Begin to register ThreadPool Name [{}]",
+                            fieldName, beanName, tpName);
+
+                    Field field = bean.getClass().getDeclaredField(fieldName);
                     field.setAccessible(true);
-                    Object objRef=field.get(bean);
-                    if(null!=objRef){
-                        ThreadPoolMonitorSet.INSTANCE.register((String)entry.getValue(),objRef);
-                    }else {
-                        //TODO Log
+                    Object objRef = field.get(bean);
+                    if (null != objRef) {
+                        ThreadPoolMonitorSet.INSTANCE.register(tpName, objRef);
+                    } else {
+                        LOGGER.error("property [{}] is null in bean [{}]", fieldName, beanName);
                     }
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
-
-            LOGGER.error("in postProcessAfterInitialization exception",e);
-            //TODO log
+            LOGGER.error("In postProcessAfterInitialization exception", e);
 
         }
 

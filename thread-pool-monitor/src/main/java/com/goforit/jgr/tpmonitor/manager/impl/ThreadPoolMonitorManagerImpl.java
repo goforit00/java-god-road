@@ -5,6 +5,8 @@ import com.goforit.jgr.tpmonitor.manager.ThreadPoolMonitorManager;
 import com.goforit.jgr.tpmonitor.monitor.ThreadPoolMonitorSet;
 import com.goforit.jgr.tpmonitor.proxy.ThreadPoolProxy;
 import com.goforit.jgr.tpmonitor.spring.SpringContextUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,12 +20,14 @@ import java.util.Map;
 @Service(value = "threadPoolMonitorManager")
 public class ThreadPoolMonitorManagerImpl implements ThreadPoolMonitorManager {
 
+    private static final Logger LOGGER= LoggerFactory.getLogger(ThreadPoolMonitorManagerImpl.class);
+
     @Override
     public ThreadPoolInformation getInformationByName(String name) {
 
         Object threadPoolObject=ThreadPoolMonitorSet.INSTANCE.getThreadPoolObject(name);
         if(null==threadPoolObject){
-            //TODO log
+            LOGGER.warn("Not find ThreadPool by Name [{}]", name);
             return null;
         }
 
@@ -49,15 +53,15 @@ public class ThreadPoolMonitorManagerImpl implements ThreadPoolMonitorManager {
         Object threadPoolObject=ThreadPoolMonitorSet.INSTANCE.getThreadPoolObject(threadPoolName);
         if(null!=threadPoolObject){
             //已经注册
-            //TODO log
+            LOGGER.error("Register ThreadPool Error. threadPoolName[{}] has existed.",threadPoolName);
             return null;
         }
 
-        //TODO get thread pool bean
         threadPoolObject=SpringContextUtil.getBeanById(beanId);
         if(null==threadPoolObject){
             //未获得bean
             //TODO log
+            LOGGER.error("Register ThreadPool Error. threadPool bean not find by id[{}]",beanId);
             return null;
         }
 

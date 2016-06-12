@@ -19,10 +19,11 @@ abstract public class AbstractThreadPoolMonitorRegister implements InitializingB
         Map<String,Object> threadPoolMap=this.addThreadPool();
 
         try{
+            LOGGER.info("Begin to register ThreadPool. ");
             for(Map.Entry<String,Object> entry:threadPoolMap.entrySet()){
-                System.err.println("In AbstractThreadPoolMonitorRegister. begin to register thread pool name="+entry.getKey());
+                LOGGER.info("ThreadPool Name {}", entry.getKey());
                 ThreadPoolMonitorSet.INSTANCE.register(entry.getKey(),entry.getValue());
-            }
+            } 
         }catch (Exception e){
             LOGGER.error("call ThreadPoolMonitorSet.INSTANCE.register() error. ",e);
             throw e;

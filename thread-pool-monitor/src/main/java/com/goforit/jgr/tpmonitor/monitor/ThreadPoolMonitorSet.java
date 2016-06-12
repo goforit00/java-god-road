@@ -21,11 +21,9 @@ public enum ThreadPoolMonitorSet {
         @Override
         public boolean register(String threadPoolName, Object ThreadPoolObject) {
 
-            System.err.println("begin to registe thread pool name="+threadPoolName);
             if(null!=threadPoolMap.get(threadPoolName)){
-                //TODO log
-                LOGGER.error("Thread Pool Name has exist. threadPoolName="+threadPoolName);
-                throw new RuntimeException("Thread Pool Name has exist. threadPoolName="+threadPoolName);
+                LOGGER.error("ThreadPool Name [{}] has exist. ",threadPoolName);
+                throw new RuntimeException("Thread Pool Name has exist. threadName="+threadPoolName);
             }
 
             threadPoolMap.put(threadPoolName,ThreadPoolObject);

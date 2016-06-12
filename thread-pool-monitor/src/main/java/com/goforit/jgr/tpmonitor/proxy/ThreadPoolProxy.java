@@ -25,8 +25,7 @@ public class ThreadPoolProxy {
             Object threadNum=invokeFunc(threadPoolObject,"getPoolSize").invoke(threadPoolObject);
             return (Integer)threadNum;
         }catch (Exception e){
-            //TODO log
-            LOGGER.error("",e);
+            LOGGER.error("run getPoolSize() error.",e);
             return -1;
         }
     }
@@ -36,8 +35,7 @@ public class ThreadPoolProxy {
             Object coreThreadNum=invokeFunc(threadPoolObject,"getCorePoolSize").invoke(threadPoolObject);
             return (Integer)coreThreadNum;
         }catch (Exception e){
-            //TODO log
-            LOGGER.error("",e);
+            LOGGER.error("run getCorePoolSize() error.",e);
             return -1;
         }
     }
@@ -47,8 +45,7 @@ public class ThreadPoolProxy {
             Object maxThreadNum = invokeFunc(threadPoolObject,"getMaximumPoolSize").invoke(threadPoolObject);
             return (Integer)maxThreadNum;
         }catch (Exception e){
-            //TODO log
-            LOGGER.error("",e);
+            LOGGER.error("run getMaximumPoolSize() error.",e);
             return -1;
         }
     }
@@ -59,10 +56,7 @@ public class ThreadPoolProxy {
             Object queueLength=invokeFunc(queue,"size").invoke(queue);
             return (Integer)queueLength;
         }catch (Exception e){
-            //TODO log
-            LOGGER.error("",e);
-            e.printStackTrace();
-
+            LOGGER.error("run getQueue() or queue.size() error.",e);
             return -1;
         }
     }

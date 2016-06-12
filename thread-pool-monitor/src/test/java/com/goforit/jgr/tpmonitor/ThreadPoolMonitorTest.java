@@ -5,6 +5,8 @@ import com.goforit.jgr.tpmonitor.facade.ThreadPoolMonitorFacade;
 import com.goforit.jgr.tpmonitor.facade.model.ThreadPoolInformation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,6 +25,9 @@ import java.util.concurrent.TimeUnit;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ThreadPoolMonitorTest {
 
+    private static final Logger LOGGER= LoggerFactory.getLogger(ThreadPoolMonitorTest.class);
+
+//    private static final Logger LOGGER= Logger.getLogger(ThreadPoolMonitorTest.class);
     @Autowired
     private ThreadPoolMonitorFacade threadPoolMonitorFacade;
 
@@ -35,7 +40,7 @@ public class ThreadPoolMonitorTest {
 //    @Transactional
     @Test
     public void testMonitor(){
-        System.err.println("begin");
+
 
         ThreadPoolInformation information=threadPoolMonitorFacade.getThreadPoolRunTimeInformation("normal");
 
