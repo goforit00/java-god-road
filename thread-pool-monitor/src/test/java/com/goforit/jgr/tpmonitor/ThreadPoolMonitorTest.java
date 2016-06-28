@@ -74,4 +74,9 @@ public class ThreadPoolMonitorTest {
 
     }
 
+//    public  static void main(String argv[]){
+//        Map<String,String> map=new HashMap<String, String>();
+//        map.put("1","1");
+//    }
+
 }
